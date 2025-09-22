@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score
 import mlflow
 import mlflow.sklearn
 from mlflow.artifacts import download_artifacts  # used to fetch artifacts by run_id
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns"))
+mlflow.set_experiment("Iris - Model Training")
 
 def train_evaluate_register(preprocessing_run_id, C=1.0):
     """

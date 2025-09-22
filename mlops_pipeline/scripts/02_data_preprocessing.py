@@ -3,6 +3,8 @@ import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 import mlflow
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns"))
+mlflow.set_experiment("Iris - Data Preprocessing")
 
 def preprocess_data(test_size=0.25, random_state=42):
     """

@@ -1,6 +1,9 @@
 import pandas as pd
 from sklearn.datasets import load_iris
 import mlflow
+import os
+mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns"))
+mlflow.set_experiment("Iris - Data Validation")
 
 def validate_data():
     """
