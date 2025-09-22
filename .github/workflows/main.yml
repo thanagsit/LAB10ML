@@ -40,7 +40,7 @@ jobs:
     needs: ci-checks
     runs-on: ubuntu-latest
     env:
-      # ใส่ถ้ามี MLflow server ภายนอก
+      # (ถ้ามี MLflow Server ภายนอก ใส่ secrets ไว้ที่ Settings > Secrets and variables > Actions)
       MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
       MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
       MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
@@ -66,8 +66,15 @@ jobs:
         id: preprocess
         run: python mlops_pipeline/scripts/02_data_preprocessing.py
 
+      - name: Read preprocessing run_id (from $GITHUB_OUTPUT)
+        id: read_runid
+        shell: bash
+        run: |
+          RUN_ID=$(tail -n 1 "$GITHUB_OUTPUT" | sed 's/run_id=//')
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
       - name: Step 3 - Train/Evaluate/Register
-        run: python mlops_pipeline/scripts/03_train_evaluate_register.py "${{ steps.preprocess.outputs.run_id }}"
+        run: python mlops_pipeline/scripts/03_train_evaluate_register.py "${{ steps.read_runid.outputs.run_id }}"
 
       - name: Transition Model to Staging
         if: success()
