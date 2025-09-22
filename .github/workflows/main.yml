@@ -65,7 +65,7 @@ jobs:
 
     - name: Transition Model to Staging
       if: success()
-      run: python mlops_pipeline/scripts/04_transition_model.py "wine-classifier-prod" "Staging"
+      run: python mlops_pipeline/scripts/04_transition_model.py "iris-classifier-prod" "Staging"
 
     - name: Upload mlruns
       if: always()
