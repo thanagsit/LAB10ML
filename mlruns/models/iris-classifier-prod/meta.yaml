@@ -1,0 +1,8 @@
+aliases:
+  Staging: '1'
+creation_timestamp: 1758536658238
+deployment_job_id: null
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1758536969130
+name: iris-classifier-prod

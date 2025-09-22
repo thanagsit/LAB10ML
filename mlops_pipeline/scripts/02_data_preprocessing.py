@@ -3,8 +3,6 @@ import pandas as pd
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 import mlflow
-mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "file:./mlruns"))
-mlflow.set_experiment("Iris - Data Preprocessing")
 
 def preprocess_data(test_size=0.25, random_state=42):
     """
@@ -59,8 +57,8 @@ def preprocess_data(test_size=0.25, random_state=42):
 
         # Write run_id to GITHUB_OUTPUT for other steps to use
         if "GITHUB_OUTPUT" in os.environ:
-            with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-                print(f"run_id={run_id}", file=f)
+            with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+                f.write(f"run_id={run_id}\n")  # สำคัญ: ต้องมี \n ปิดท้ายบรรทัด
 
 if __name__ == "__main__":
     # This line correctly calls the function to ensure the script runs
